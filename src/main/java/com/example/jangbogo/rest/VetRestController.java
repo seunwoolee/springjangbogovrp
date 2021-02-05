@@ -55,31 +55,31 @@ public class VetRestController {
 		return new ResponseEntity<Collection<Vet>>(vets, HttpStatus.OK);
 	}
 
-//    @PreAuthorize( "hasRole(@roles.VET_ADMIN)" )
-//	@RequestMapping(value = "/{vetId}", method = RequestMethod.GET, produces = "application/json")
-//	public ResponseEntity<Vet> getVet(@PathVariable("vetId") int vetId){
-//		Vet vet = this.clinicService.findVetById(vetId);
-//		if(vet == null){
-//			return new ResponseEntity<Vet>(HttpStatus.NOT_FOUND);
-//		}
-//		return new ResponseEntity<Vet>(vet, HttpStatus.OK);
-//	}
-//
-//    @PreAuthorize( "hasRole(@roles.VET_ADMIN)" )
-//	@RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
-//	public ResponseEntity<Vet> addVet(@RequestBody @Valid Vet vet, BindingResult bindingResult, UriComponentsBuilder ucBuilder){
-//		BindingErrorsResponse errors = new BindingErrorsResponse();
-//		HttpHeaders headers = new HttpHeaders();
-//		if(bindingResult.hasErrors() || (vet == null)){
-//			errors.addAllErrors(bindingResult);
-//			headers.add("errors", errors.toJSON());
-//			return new ResponseEntity<Vet>(headers, HttpStatus.BAD_REQUEST);
-//		}
-//		this.clinicService.saveVet(vet);
-//		headers.setLocation(ucBuilder.path("/api/vets/{id}").buildAndExpand(vet.getId()).toUri());
-//		return new ResponseEntity<Vet>(vet, headers, HttpStatus.CREATED);
-//	}
-//
+    @PreAuthorize( "hasRole(@roles.VET_ADMIN)" )
+	@RequestMapping(value = "/{vetId}", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<Vet> getVet(@PathVariable("vetId") int vetId){
+		Vet vet = this.clinicService.findVetById(vetId);
+		if(vet == null){
+			return new ResponseEntity<Vet>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Vet>(vet, HttpStatus.OK);
+	}
+
+    @PreAuthorize( "hasRole(@roles.VET_ADMIN)" )
+	@RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
+	public ResponseEntity<Vet> addVet(@RequestBody @Valid Vet vet, BindingResult bindingResult, UriComponentsBuilder ucBuilder){
+		BindingErrorsResponse errors = new BindingErrorsResponse();
+		HttpHeaders headers = new HttpHeaders();
+		if(bindingResult.hasErrors() || (vet == null)){
+			errors.addAllErrors(bindingResult);
+			headers.add("errors", errors.toJSON());
+			return new ResponseEntity<Vet>(headers, HttpStatus.BAD_REQUEST);
+		}
+		this.clinicService.saveVet(vet);
+		headers.setLocation(ucBuilder.path("/api/vets/{id}").buildAndExpand(vet.getId()).toUri());
+		return new ResponseEntity<Vet>(vet, headers, HttpStatus.CREATED);
+	}
+
 //    @PreAuthorize( "hasRole(@roles.VET_ADMIN)" )
 //	@RequestMapping(value = "/{vetId}", method = RequestMethod.PUT, produces = "application/json")
 //	public ResponseEntity<Vet> updateVet(@PathVariable("vetId") int vetId, @RequestBody @Valid Vet vet, BindingResult bindingResult){
