@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.jangbogo.service;
+package com.example.jangbogo.repository;
 
 import com.example.jangbogo.model.Company;
 import com.example.jangbogo.model.Vet;
@@ -21,18 +21,13 @@ import org.springframework.dao.DataAccessException;
 
 import java.util.Collection;
 
+public interface CompanyRepository {
+    Collection<Company> findAll() throws DataAccessException;
 
-/**
- * Mostly used as a facade so all controllers have a single point of entry
- *
- * @author Michael Isvy
- * @author Vitaliy Fedoriv
- */
-public interface JangbogoService {
+//    Vet findById(int id) throws DataAccessException;
+//
+//    void save(Vet vet) throws DataAccessException;
+//
+//    void delete(Vet vet) throws DataAccessException;
 
-//	Vet findVetById(int id) throws DataAccessException;
-	Collection<Company> findCompanies() throws DataAccessException;
-//	Collection<Vet> findAllVets() throws DataAccessException;
-//	void saveVet(Vet vet) throws DataAccessException;
-//	void deleteVet(Vet vet) throws DataAccessException;
 }
