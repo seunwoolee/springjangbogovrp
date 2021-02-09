@@ -15,18 +15,12 @@
  */
 package com.example.jangbogo.repository;
 
-import com.example.jangbogo.DTO.Company;
+import com.example.jangbogo.DTO.AuthUser;
+import com.example.jangbogo.model.Vet;
 import org.springframework.dao.DataAccessException;
 
 import java.util.Collection;
 
-public interface CompanyRepository {
-    Collection<Company> findAll() throws DataAccessException;
-
-//    Vet findById(int id) throws DataAccessException;
-//
-//    void save(Vet vet) throws DataAccessException;
-//
-//    void delete(Vet vet) throws DataAccessException;
-
+public interface AuthUserRepository {
+    AuthUser login(String username, String password) throws DataAccessException;
 }

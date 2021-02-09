@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.jangbogo.model;
+package com.example.jangbogo.DTO;
 
+import com.example.jangbogo.model.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
@@ -29,6 +30,7 @@ public class Company extends BaseEntity {
     private String latitude;
     private String longitude;
     private String name;
+    private AuthUser manager;
 
     @Override
     public Integer getId() {
@@ -38,6 +40,14 @@ public class Company extends BaseEntity {
     @Override
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public AuthUser getManager() {
+        return manager;
+    }
+
+    public void setManager(AuthUser manager) {
+        this.manager = manager;
     }
 
     public String getAddress() {

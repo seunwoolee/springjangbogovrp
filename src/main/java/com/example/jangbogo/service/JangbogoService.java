@@ -15,8 +15,8 @@
  */
 package com.example.jangbogo.service;
 
-import com.example.jangbogo.model.Company;
-import com.example.jangbogo.model.Vet;
+import com.example.jangbogo.DTO.AuthUser;
+import com.example.jangbogo.DTO.Company;
 import org.springframework.dao.DataAccessException;
 
 import java.util.Collection;
@@ -32,6 +32,7 @@ public interface JangbogoService {
 
 //	Vet findVetById(int id) throws DataAccessException;
 	Collection<Company> findCompanies() throws DataAccessException;
+	AuthUser login(String username, String password) throws DataAccessException;
 //	Collection<Vet> findAllVets() throws DataAccessException;
 //	void saveVet(Vet vet) throws DataAccessException;
 //	void deleteVet(Vet vet) throws DataAccessException;

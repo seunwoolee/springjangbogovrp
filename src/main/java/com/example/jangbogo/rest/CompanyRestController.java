@@ -15,20 +15,12 @@
  */
 package com.example.jangbogo.rest;
 
-import com.example.jangbogo.model.Company;
-import com.example.jangbogo.model.Vet;
-import com.example.jangbogo.service.ClinicService;
+import com.example.jangbogo.DTO.Company;
 import com.example.jangbogo.service.JangbogoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -42,8 +34,11 @@ import java.util.Collection;
 @RequestMapping("api/companies")
 public class CompanyRestController {
 
-	@Autowired
-	private JangbogoService jangbogoService;
+	private final JangbogoService jangbogoService;
+
+	public CompanyRestController(JangbogoService jangbogoService) {
+		this.jangbogoService = jangbogoService;
+	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<Collection<Company>> getAllCompanies(){
