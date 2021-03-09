@@ -1,17 +1,20 @@
 package com.example.jangbogo.rest;
 
 import com.example.jangbogo.DTO.Company;
+import com.example.jangbogo.exceptions.DuplicateUserIdException;
 import com.example.jangbogo.service.JangbogoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(CompanyRestController.class)
 class CompanyRestControllerTest {
+    private final String KEY = "asdfasdfasdf";
+
     @Autowired
     private CompanyRestController companyRestController;
 
@@ -61,4 +66,17 @@ class CompanyRestControllerTest {
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
+
+    @Test
+    void getCompany() throws Exception {
+        given(this.jangbogoService.getCompany(KEY)).willReturn(companies.get(0));
+        this.mockMvc.perform(get("/company/get_company/")
+//                .header(HttpHeaders.AUTHORIZATION, "Token " + KEY)
+                .header("authorization", "Token " + KEY)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.id").value(1));
+    }
+
 }

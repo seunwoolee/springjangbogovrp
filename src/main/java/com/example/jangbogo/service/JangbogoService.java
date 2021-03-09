@@ -17,23 +17,25 @@ package com.example.jangbogo.service;
 
 import com.example.jangbogo.DTO.AuthUser;
 import com.example.jangbogo.DTO.Company;
+import com.example.jangbogo.DTO.Customer;
+import com.example.jangbogo.DTO.Order;
 import org.springframework.dao.DataAccessException;
 
+import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 
-/**
- * Mostly used as a facade so all controllers have a single point of entry
- *
- * @author Michael Isvy
- * @author Vitaliy Fedoriv
- */
 public interface JangbogoService {
-
-//	Vet findVetById(int id) throws DataAccessException;
 	Collection<Company> findCompanies() throws DataAccessException;
+	Company getCompany(String key) throws DataAccessException;
 	AuthUser login(String username, String password) throws DataAccessException;
-//	Collection<Vet> findAllVets() throws DataAccessException;
-//	void saveVet(Vet vet) throws DataAccessException;
-//	void deleteVet(Vet vet) throws DataAccessException;
+	Collection<Order> getOrders(Boolean isAm, Company company) throws DataAccessException, SQLException;
+	void updateCourseNumber(String guestId, int toCourseNumber) throws DataAccessException, SQLException;
+	void saveGeolocation(String orderNumber, String lat, String lon, String companyCode) throws DataAccessException, SQLException;
+	void removePrevRouteM(Boolean isAm, Company company) throws DataAccessException, SQLException;
+	Customer createCustomers(Order order) throws DataAccessException, SQLException;
+	void createOrder(Map<String, Object> params) throws DataAccessException, SQLException;
+	HashMap<String, Object> validateCustomers(Collection<Order> orders) throws DataAccessException, SQLException;
 }

@@ -1,21 +1,16 @@
-package com.example.jangbogo;
+package com.example.jangbogo.repository.jdbc;
 
 import com.example.jangbogo.config.DataSourceConfig;
-import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes= DataSourceConfig.class)
-@WebAppConfiguration
-class JangbogoApplicationTests {
-
-    @Test
-    void contextLoads() {
-    }
+class JdbcAuthUserRepositoryImplTest {
 
 }

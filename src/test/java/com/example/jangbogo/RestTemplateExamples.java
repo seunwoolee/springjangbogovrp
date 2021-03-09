@@ -137,47 +137,47 @@ public class RestTemplateExamples {
 
     }
 
-    @Test
-    public void updateCustomerUsingPatch() throws Exception {
-
-        //create customer to update
-        String apiUrl = API_ROOT + "/customers/";
-
-        // Use Apache HTTP client factory
-        //see: https://github.com/spring-cloud/spring-cloud-netflix/issues/1777
-        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-        RestTemplate restTemplate = new RestTemplate(requestFactory);
-
-        //Java object to parse to JSON
-        Map<String, Object> postMap = new HashMap<>();
-        postMap.put("firstname", "Sam");
-        postMap.put("lastname", "Axe");
-
-        JsonNode jsonNode = restTemplate.postForObject(apiUrl, postMap, JsonNode.class);
-
-        System.out.println("Response");
-        System.out.println(jsonNode.toString());
-
-        String customerUrl = jsonNode.get("customer_url").textValue();
-
-        String id = customerUrl.split("/")[3];
-
-        System.out.println("Created customer id: " + id);
-
-        postMap.put("firstname", "Sam 2");
-        postMap.put("lastname", "Axe 2");
-
-        //example of setting headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(postMap, headers);
-
-        JsonNode updatedNode = restTemplate.patchForObject(apiUrl + id, entity, JsonNode.class);
-
-        System.out.println(updatedNode.toString());
-    }
+//    @Test
+//    public void updateCustomerUsingPatch() throws Exception {
+//
+//        //create customer to update
+//        String apiUrl = API_ROOT + "/customers/";
+//
+//        // Use Apache HTTP client factory
+//        //see: https://github.com/spring-cloud/spring-cloud-netflix/issues/1777
+//        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+//        RestTemplate restTemplate = new RestTemplate(requestFactory);
+//
+//        //Java object to parse to JSON
+//        Map<String, Object> postMap = new HashMap<>();
+//        postMap.put("firstname", "Sam");
+//        postMap.put("lastname", "Axe");
+//
+//        JsonNode jsonNode = restTemplate.postForObject(apiUrl, postMap, JsonNode.class);
+//
+//        System.out.println("Response");
+//        System.out.println(jsonNode.toString());
+//
+//        String customerUrl = jsonNode.get("customer_url").textValue();
+//
+//        String id = customerUrl.split("/")[3];
+//
+//        System.out.println("Created customer id: " + id);
+//
+//        postMap.put("firstname", "Sam 2");
+//        postMap.put("lastname", "Axe 2");
+//
+//        //example of setting headers
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(postMap, headers);
+//
+//        JsonNode updatedNode = restTemplate.patchForObject(apiUrl + id, entity, JsonNode.class);
+//
+//        System.out.println(updatedNode.toString());
+//    }
 
     @Test(expected = HttpClientErrorException.class)
     public void deleteCustomer() throws Exception {

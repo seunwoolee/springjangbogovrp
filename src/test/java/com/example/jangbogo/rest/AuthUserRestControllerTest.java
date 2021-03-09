@@ -14,9 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -26,8 +23,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(AuthUserRestController.class)
 class AuthUserRestControllerTest {
-    private static String USERNAME = "lee";
-    private static String PASSWORD = "seungwoo";
+    public static String USERNAME = "lee";
+    public static String PASSWORD = "seungwoo";
+    public static String KEY = "asdfkqlwejrklqweklrjlqwer";
 
     @Autowired
     private AuthUserRestController authUserRestController;
@@ -47,6 +45,7 @@ class AuthUserRestControllerTest {
         authUser = new AuthUser();
         authUser.setUsername(USERNAME);
         authUser.setPassword(PASSWORD);
+        authUser.setKey(KEY);
     }
 
     @Test
@@ -62,6 +61,7 @@ class AuthUserRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value(USERNAME))
                 .andExpect(jsonPath("$.password").value(PASSWORD))
+                .andExpect(jsonPath("$.key").value(KEY))
                 .andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);

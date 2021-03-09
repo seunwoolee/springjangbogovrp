@@ -30,17 +30,8 @@ public class Company extends BaseEntity {
     private String latitude;
     private String longitude;
     private String name;
+    private String code;
     private AuthUser manager;
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public AuthUser getManager() {
         return manager;
@@ -82,4 +73,11 @@ public class Company extends BaseEntity {
         this.name = name;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

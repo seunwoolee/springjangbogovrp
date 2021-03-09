@@ -1,18 +1,13 @@
 package com.example.jangbogo.repository.jdbc;
 
 import com.example.jangbogo.DTO.AuthUser;
-import com.example.jangbogo.DTO.Company;
-import com.example.jangbogo.model.Vet;
 import com.example.jangbogo.repository.AuthUserRepository;
-import com.example.jangbogo.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -37,10 +32,10 @@ public class JdbcAuthUserRepositoryImpl implements AuthUserRepository {
         AuthUser authUser;
         Map<String, Object> authUser_params = new HashMap<>();
         authUser_params.put("username", username);
-//        authUser_params.put("password", password);
+        // TODO PASSWORD authUser_params.put("password", password);
 
         authUser = this.namedParameterJdbcTemplate.queryForObject(
-                "SELECT * FROM auth_user WHERE username= :username",
+                "SELECT auth_user.*, a.key FROM auth_user LEFT JOIN authtoken_token a on auth_user.id = a.user_id WHERE username= :username",
                 authUser_params,
                 BeanPropertyRowMapper.newInstance(AuthUser.class));
 

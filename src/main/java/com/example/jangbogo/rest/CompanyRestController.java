@@ -17,36 +17,40 @@ package com.example.jangbogo.rest;
 
 import com.example.jangbogo.DTO.Company;
 import com.example.jangbogo.service.JangbogoService;
+import com.example.jangbogo.util.DjangoAuth;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
-/**
- * @author Vitaliy Fedoriv
- *
- */
 
 @RestController
 @CrossOrigin(exposedHeaders = "errors, content-type")
-@RequestMapping("api/companies")
 public class CompanyRestController {
 
-	private final JangbogoService jangbogoService;
+    private final JangbogoService jangbogoService;
 
-	public CompanyRestController(JangbogoService jangbogoService) {
-		this.jangbogoService = jangbogoService;
-	}
+    public CompanyRestController(JangbogoService jangbogoService) {
+        this.jangbogoService = jangbogoService;
+    }
 
-	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<Collection<Company>> getAllCompanies(){
-		Collection<Company> companies = new ArrayList<Company>();
-		companies.addAll(this.jangbogoService.findCompanies());
-		if (companies.isEmpty()){
-			return new ResponseEntity<Collection<Company>>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<Collection<Company>>(companies, HttpStatus.OK);
-	}
+    @RequestMapping(value = "api/companies", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<Collection<Company>> getAllCompanies() {
+        Collection<Company> companies = new ArrayList<Company>();
+        companies.addAll(this.jangbogoService.findCompanies());
+        if (companies.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(companies, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "company/get_company", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<Company> getCompany(@RequestHeader Map<String, String> headers) {
+        String key = DjangoAuth.getAuthToken(headers);
+        Company company = this.jangbogoService.getCompany(key);
+        return new ResponseEntity<>(company, HttpStatus.OK);
+    }
 }

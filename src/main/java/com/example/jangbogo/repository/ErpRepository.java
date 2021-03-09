@@ -15,18 +15,17 @@
  */
 package com.example.jangbogo.repository;
 
-import com.example.jangbogo.DTO.Company;
+import com.example.jangbogo.DTO.Order;
 import org.springframework.dao.DataAccessException;
 
+import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Map;
 
-public interface CompanyRepository {
-    Collection<Company> findAll() throws DataAccessException;
-
-//    Vet findById(int id) throws DataAccessException;
-//
-//    void save(Vet vet) throws DataAccessException;
-//
-//    void delete(Vet vet) throws DataAccessException;
-
+public interface ErpRepository {
+    Collection<Order> getOrders(Boolean isAm, String companyCode) throws DataAccessException, SQLException;
+    void updateCourseNumber(String guestId, int toCourseNumber) throws DataAccessException;
+    void saveGeolocation(Map<String, Object> params) throws DataAccessException;
+    void removePrevRouteM(Map<String, Object> params) throws DataAccessException;;
 }

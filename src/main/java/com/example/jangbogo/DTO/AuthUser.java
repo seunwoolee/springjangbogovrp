@@ -6,6 +6,7 @@ public class AuthUser extends BaseEntity {
     private String username;
     private String password;
     private String firstName;
+    private String key;
 
     public String getUsername() {
         return username;
@@ -29,5 +30,13 @@ public class AuthUser extends BaseEntity {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

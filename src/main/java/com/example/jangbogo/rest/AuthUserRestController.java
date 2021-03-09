@@ -19,6 +19,8 @@ import com.example.jangbogo.DTO.AuthUser;
 import com.example.jangbogo.DTO.Company;
 import com.example.jangbogo.model.Vet;
 import com.example.jangbogo.service.JangbogoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,16 +48,12 @@ public class AuthUserRestController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
-//	public ResponseEntity<AuthUser> login(@RequestBody @Valid Vet vet, BindingResult bindingResult){
     public ResponseEntity<AuthUser> login(@RequestBody AuthUser authUser) {
-        System.out.println(authUser.getUsername());
-        System.out.println(authUser.getPassword());
-        AuthUser authUser1 = this.jangbogoService.login(authUser.getUsername(), authUser.getPassword());
-//        if (companies.isEmpty()) {
-//            return new ResponseEntity<Collection<Company>>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<Collection<Company>>(companies, HttpStatus.OK);
-        return new ResponseEntity<AuthUser>(authUser1, HttpStatus.OK);
-
+        try {
+            AuthUser authUser1 = this.jangbogoService.login(authUser.getUsername(), authUser.getPassword());
+            return new ResponseEntity<AuthUser>(authUser1, HttpStatus.OK);
+        } catch (DataAccessException dataAccessException) {
+            return new ResponseEntity<AuthUser>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
