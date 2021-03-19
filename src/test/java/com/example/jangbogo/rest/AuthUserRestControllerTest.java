@@ -22,11 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest(AuthUserRestController.class)
-class AuthUserRestControllerTest {
-    public static String USERNAME = "lee";
-    public static String PASSWORD = "seungwoo";
-    public static String KEY = "asdfkqlwejrklqweklrjlqwer";
-
+class AuthUserRestControllerTest extends TestRestController{
     @Autowired
     private AuthUserRestController authUserRestController;
 
@@ -36,22 +32,14 @@ class AuthUserRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private AuthUser authUser;
-
     @BeforeEach
     public void initAuthUser() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(authUserRestController)
-                .build();
-        authUser = new AuthUser();
-        authUser.setUsername(USERNAME);
-        authUser.setPassword(PASSWORD);
-        authUser.setKey(KEY);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(authUserRestController).build();
     }
 
     @Test
     void login() throws Exception {
-        given(this.jangbogoService.login(USERNAME, PASSWORD)).willReturn(authUser);
-
+        given(this.jangbogoService.login(authUser.getUsername(), authUser.getPassword())).willReturn(authUser);
         ObjectMapper mapper = new ObjectMapper();
         String newAuthUserAsJSON = mapper.writeValueAsString(authUser);
         System.out.println("newAuthUserAsJSON " + newAuthUserAsJSON);

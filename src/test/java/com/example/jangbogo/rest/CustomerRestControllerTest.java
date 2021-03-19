@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest(CustomerRestController.class)
-class CustomerRestControllerTest {
+class CustomerRestControllerTest extends TestRestController {
     @Autowired
     CustomerRestController customerRestController;
 
@@ -34,46 +34,9 @@ class CustomerRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private final Collection<Order> orders = new ArrayList<>();
-    private Company company;
-    private AuthUser authUser;
-    private Customer customer;
-
     @BeforeEach
     public void initData() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(customerRestController)
-                .build();
-        authUser = new AuthUser();
-        authUser.setUsername(USERNAME);
-        authUser.setPassword(PASSWORD);
-        authUser.setKey(KEY);
-
-        Order order1 = new Order();
-        order1.setId(1);
-        order1.setCourseNumber(1);
-        orders.add(order1);
-
-        Order order2 = new Order();
-        order2.setId(2);
-        order2.setCourseNumber(2);
-        orders.add(order2);
-
-        company = new Company();
-        company.setId(1);
-        company.setName("칠성");
-        company.setAddress("칠성점");
-        company.setLatitude("1.11");
-        company.setLongitude("1.12");
-        company.setCode("003");
-
-        customer = new Customer();
-        customer.setId(1);
-        customer.setName("a");
-        customer.setAddress("aa");
-        customer.setLatitude(1.0);
-        customer.setLongitude(1.0);
-        customer.setCustomer_id("111");
-        customer.setCourse_number(1);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(customerRestController).build();
     }
 
     @Test

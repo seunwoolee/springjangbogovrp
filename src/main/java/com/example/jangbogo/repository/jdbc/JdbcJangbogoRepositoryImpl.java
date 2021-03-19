@@ -2,6 +2,7 @@ package com.example.jangbogo.repository.jdbc;
 
 import com.example.jangbogo.DTO.Company;
 import com.example.jangbogo.DTO.Customer;
+import com.example.jangbogo.DTO.Delivery;
 import com.example.jangbogo.repository.JangbogoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -99,8 +100,8 @@ public class JdbcJangbogoRepositoryImpl implements JangbogoRepository {
 
     @Override
     public Customer createCustomer(MapSqlParameterSource params) throws DataAccessException {
-        params.addValue("created",new Date());
-        params.addValue("modified",new Date());
+        params.addValue("created", new Date());
+        params.addValue("modified", new Date());
         GeneratedKeyHolder holder = new GeneratedKeyHolder();
         this.namedParameterJdbcTemplate.update(
                 "INSERT INTO customer_customer(customer_id, name, address, latitude, longitude, course_number, created, modified)" +
@@ -111,11 +112,31 @@ public class JdbcJangbogoRepositoryImpl implements JangbogoRepository {
 
     @Override
     public void createOrder(Map<String, Object> params) throws DataAccessException {
-        params.put("created",new Date());
-        params.put("modified",new Date());
+        params.put("created", new Date());
+        params.put("modified", new Date());
         this.namedParameterJdbcTemplate.update(
                 "INSERT INTO customer_order(order_id, price, customer_id, company_id, date, is_am, created, modified)" +
                         " VALUES (:order_id, :price, :customer_id, :company_id, :date, :is_am, :created, :modified)", params);
+    }
+
+    @Override
+    public Collection<Delivery> getDeliveries(Company company, Date startDate, Date endDate) throws DataAccessException {
+        List<Delivery> deliveries = new ArrayList<>();
+        Map<String, Object> params = new HashMap<>();
+        params.put("startDate", startDate);
+        params.put("endDate", endDate);
+        params.put("companyId", company.getId());
+        String query = new StringBuilder()
+                .append("select * from delivery_routem ")
+                .append("where company_id = :companyId ")
+                .append("and date between :startDate and :endDate ")
+                .toString();
+
+        deliveries.addAll(this.namedParameterJdbcTemplate.query(
+                query, params,
+                BeanPropertyRowMapper.newInstance(Delivery.class)));
+
+        return deliveries;
     }
 
 }

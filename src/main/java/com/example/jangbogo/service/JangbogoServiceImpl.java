@@ -1,9 +1,6 @@
 package com.example.jangbogo.service;
 
-import com.example.jangbogo.DTO.AuthUser;
-import com.example.jangbogo.DTO.Company;
-import com.example.jangbogo.DTO.Customer;
-import com.example.jangbogo.DTO.Order;
+import com.example.jangbogo.DTO.*;
 import com.example.jangbogo.repository.AuthUserRepository;
 import com.example.jangbogo.repository.JangbogoRepository;
 import com.example.jangbogo.repository.ErpRepository;
@@ -99,6 +96,11 @@ public class JangbogoServiceImpl implements JangbogoService {
         }
 
         return map;
+    }
+
+    @Override
+    public Collection<Delivery> getDeliveries(Company company, Date startDate, Date endDate) throws DataAccessException {
+        return this.jangbogoRepository.getDeliveries(company, startDate, endDate);
     }
 
     @Override

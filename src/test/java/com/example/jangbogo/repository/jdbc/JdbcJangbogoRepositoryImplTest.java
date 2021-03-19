@@ -1,5 +1,6 @@
 package com.example.jangbogo.repository.jdbc;
 
+import com.example.jangbogo.DTO.Company;
 import com.example.jangbogo.DTO.Customer;
 import com.example.jangbogo.config.DataSourceConfig;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,17 +24,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes= {DataSourceConfig.class, JdbcJangbogoRepositoryImpl.class})
+@ContextConfiguration(classes = {DataSourceConfig.class, JdbcJangbogoRepositoryImpl.class})
 class JdbcJangbogoRepositoryImplTest {
     @Autowired
     JdbcJangbogoRepositoryImpl jdbcJangbogoRepository;
 
-    String GUEEST_ID = "347048";
+    String GUEEST_ID = "347048" ;
     Double lat = 35.6579850000;
     Double lon = 128.4040940000;
-    String customer_id = "dd";
-    String name = "dd";
-    String address = "dd";
+    String customer_id = "dd" ;
+    String name = "dd" ;
+    String address = "dd" ;
     int course_number = 1;
 
     @Test
@@ -43,6 +46,16 @@ class JdbcJangbogoRepositoryImplTest {
     void getCustomerCount() {
         assertThat(jdbcJangbogoRepository.getCustomer(GUEEST_ID)).isInstanceOf(Integer.class);
         assertThat(jdbcJangbogoRepository.getCustomer(GUEEST_ID)).isEqualTo(1);
+    }
+
+    @Test
+    void getDeliveries() throws ParseException {
+        Company company = new Company();
+        company.setId(2);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String startDate = "2021-03-19" ;
+        String endDate = "2021-03-19" ;
+        assertThat(jdbcJangbogoRepository.getDeliveries(company, simpleDateFormat.parse(startDate), simpleDateFormat.parse(endDate))).hasSizeGreaterThanOrEqualTo(1);
     }
 
 //    @Test

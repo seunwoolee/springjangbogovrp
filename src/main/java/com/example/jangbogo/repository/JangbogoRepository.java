@@ -17,10 +17,12 @@ package com.example.jangbogo.repository;
 
 import com.example.jangbogo.DTO.Company;
 import com.example.jangbogo.DTO.Customer;
+import com.example.jangbogo.DTO.Delivery;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 
 public interface JangbogoRepository {
@@ -39,5 +41,7 @@ public interface JangbogoRepository {
     Customer createCustomer(MapSqlParameterSource params) throws DataAccessException;
 
     void createOrder(Map<String, Object> params) throws DataAccessException;
+
+    Collection<Delivery> getDeliveries(Company company, Date startDate, Date endDate) throws DataAccessException;
 
 }

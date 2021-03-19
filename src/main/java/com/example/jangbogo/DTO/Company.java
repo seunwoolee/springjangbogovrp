@@ -25,7 +25,6 @@ import javax.xml.bind.annotation.XmlElement;
 import java.util.*;
 
 public class Company extends BaseEntity {
-    private Integer id;
     private String address;
     private String latitude;
     private String longitude;

@@ -2,6 +2,7 @@ package com.example.jangbogo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,16 @@ public class DataSourceConfig {
         this.environment = context.getEnvironment();
     }
 
+    @Value("${jangbogo.driverClassName}")
+    private String jangbogo_driverClassName;
+    @Value("${jangbogo.url}")
+    private String jangbogo_url;
+    @Value("${jangbogo.username}")
+    private String jangbogo_username;
+    @Value("${jangbogo.password}")
+    private String jangbogo_password;
+
+
 //    @Bean
 //    @Primary
 //    public DataSource getDataSource() {
@@ -37,10 +48,10 @@ public class DataSourceConfig {
     @Qualifier("jangbogo")
     public DataSource getJangbogoDataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.driverClassName(environment.getProperty("jangbogo.driverClassName"));
-        dataSourceBuilder.url(environment.getProperty("jangbogo.url"));
-        dataSourceBuilder.username(environment.getProperty("jangbogo.username"));
-        dataSourceBuilder.password(environment.getProperty("jangbogo.password"));
+        dataSourceBuilder.driverClassName(jangbogo_driverClassName);
+        dataSourceBuilder.url(jangbogo_url);
+        dataSourceBuilder.username(jangbogo_username);
+        dataSourceBuilder.password(jangbogo_password);
         return dataSourceBuilder.build();
     }
 

@@ -15,14 +15,12 @@
  */
 package com.example.jangbogo.service;
 
-import com.example.jangbogo.DTO.AuthUser;
-import com.example.jangbogo.DTO.Company;
-import com.example.jangbogo.DTO.Customer;
-import com.example.jangbogo.DTO.Order;
+import com.example.jangbogo.DTO.*;
 import org.springframework.dao.DataAccessException;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,4 +36,5 @@ public interface JangbogoService {
 	Customer createCustomers(Order order) throws DataAccessException, SQLException;
 	void createOrder(Map<String, Object> params) throws DataAccessException, SQLException;
 	HashMap<String, Object> validateCustomers(Collection<Order> orders) throws DataAccessException, SQLException;
+	Collection<Delivery> getDeliveries(Company company, Date startDate, Date endDate) throws DataAccessException;
 }
